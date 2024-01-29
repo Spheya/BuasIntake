@@ -1,40 +1,34 @@
-#include "game.h"
-#include "tmpl8/surface.h"
-#include <cstdio> //printf
+#include "Game.hpp"
+#include "tmpl8/SpriteAnimation.hpp"
+#include <iostream>
 
-namespace Tmpl8
+// -----------------------------------------------------------
+// Initialize the application
+// -----------------------------------------------------------
+void Game::Init()
 {
-	// -----------------------------------------------------------
-	// Initialize the application
-	// -----------------------------------------------------------
-	void Game::Init()
-	{
-	}
-	
-	// -----------------------------------------------------------
-	// Close down application
-	// -----------------------------------------------------------
-	void Game::Shutdown()
-	{
-	}
+}
 
-	static Sprite rotatingGun(new Surface("assets/aagun.tga"), 36);
-	static int frame = 0;
+// -----------------------------------------------------------
+// Close down application
+// -----------------------------------------------------------
+void Game::Shutdown()
+{
+}
 
-	// -----------------------------------------------------------
-	// Main application tick function
-	// -----------------------------------------------------------
-	void Game::Tick(float deltaTime)
-	{
-		// clear the graphics window
-		screen->Clear(0);
-		// print something in the graphics window
-		screen->Print("hello world", 2, 2, 0xffffff);
-		// print something to the text window
-		printf("this goes to the console window.\n");
-		// draw a sprite
-		rotatingGun.SetFrame(frame);
-		rotatingGun.Draw(screen, 100, 100);
-		if (++frame == 36) frame = 0;
-	}
-};
+static Tmpl8::Sprite rotatingGun(new Tmpl8::Surface("assets/Player.png"), 16, 4);
+static Tmpl8::SpriteAnimation animation{ 4, 5, 6, 7, 8, 9 };
+
+// -----------------------------------------------------------
+// Main application tick function
+// -----------------------------------------------------------
+void Game::Tick(float deltaTime)
+{
+	// clear the graphics window
+	screen->Clear(0);
+
+	// draw a sprite
+	animation.update(deltaTime);
+	rotatingGun.SetFrame(animation.getCurrentFrame());
+	rotatingGun.Draw(screen, 64, 64);
+}

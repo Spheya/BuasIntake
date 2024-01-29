@@ -222,14 +222,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\game.cpp" />
-    <ClCompile Include="src\tmpl8\surface.cpp" />
-    <ClCompile Include="src\tmpl8\template.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\tmpl8\SpriteAnimation.cpp" />
+    <ClCompile Include="src\tmpl8\Surface.cpp" />
+    <ClCompile Include="src\tmpl8\Template.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game.h" />
-    <ClInclude Include="src\tmpl8\surface.h" />
-    <ClInclude Include="src\tmpl8\template.h" />
+    <ClInclude Include="src\Game.hpp" />
+    <ClInclude Include="src\tmpl8\SpriteAnimation.hpp" />
+    <ClInclude Include="src\tmpl8\Surface.hpp" />
+    <ClInclude Include="src\tmpl8\Template.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

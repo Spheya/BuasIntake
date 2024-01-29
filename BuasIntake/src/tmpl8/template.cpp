@@ -13,14 +13,14 @@
 //#define FULLSCREEN
 //#define ADVANCEDGL
 
-#include "../game.h"
+#include "../Game.hpp"
 
 #include <fcntl.h>
 #include <io.h>
-#include "template.h"
+#include "Template.hpp"
 #include <corecrt_math.h>
 #include <SDL.h>
-#include "surface.h"
+#include "Surface.hpp"
 #include <cstdio>
 #include <iostream>
 #define WIN32_LEAN_AND_MEAN
@@ -71,7 +71,7 @@ void timer::init()
 {
 	LARGE_INTEGER f;
 	QueryPerformanceFrequency(&f);
-	inv_freq = 1000. / double(f.QuadPart);
+	inv_freq = 1. / double(f.QuadPart);
 }
 
 // Math Stuff

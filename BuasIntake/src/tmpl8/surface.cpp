@@ -1,8 +1,8 @@
 // Template, BUAS version https://www.buas.nl/games
 // IGAD/BUAS(NHTV)/UU - Jacco Bikker - 2006-2020
 
-#include "surface.h"
-#include "template.h"
+#include "Surface.hpp"
+#include "Template.hpp"
 #include <cassert>
 #include <cstring>
 #include "FreeImage.h"
@@ -344,11 +344,12 @@ void Surface::ScaleColor( unsigned int a_Scale )
 	}
 }
 
-Sprite::Sprite( Surface* a_Surface, unsigned int a_NumFrames ) :
-	m_Width( static_cast<int>(a_Surface->GetWidth() / a_NumFrames) ),
-	m_Height( a_Surface->GetHeight() ),
+Sprite::Sprite( Surface* a_Surface, unsigned int a_NumFrames, unsigned int a_NumRows ) :
+	m_Width( static_cast<int>(a_Surface->GetWidth() / (a_NumFrames / a_NumRows)) ),
+	m_Height(static_cast<int>(a_Surface->GetHeight() / a_NumRows)),
 	m_Pitch(  a_Surface->GetWidth() ),
 	m_NumFrames( a_NumFrames ),
+	m_NumRows( a_NumRows ),
 	m_CurrentFrame( 0 ),
 	m_Flags( 0 ),
 	m_Start( new unsigned int*[a_NumFrames] ),
@@ -370,21 +371,23 @@ void Sprite::Draw( Surface* a_Target, int a_X, int a_Y )
 	if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
 	int x1 = a_X, x2 = a_X + m_Width;
 	int y1 = a_Y, y2 = a_Y + m_Height;
-	Pixel* src = GetBuffer() + m_CurrentFrame * m_Width;
+	Pixel* src = GetBuffer();
+	int srcX = (m_CurrentFrame % (m_NumFrames / m_NumRows)) * m_Width;
+	int srcY = (m_CurrentFrame / (m_NumFrames / m_NumRows)) * m_Height;
+
 	if (x1 < 0)
 	{
-		src += -x1;
+		srcX += -x1;
 		x1 = 0;
 	}
 	if (x2 > a_Target->GetWidth()) x2 = a_Target->GetWidth();
 	if (y1 < 0) 
 	{ 
-		src += -y1 * m_Pitch;
+		srcY += -y1;
 		y1 = 0;
 	}
 	if (y2 > a_Target->GetHeight()) y2 = a_Target->GetHeight();
 	Pixel* dest = a_Target->GetBuffer();
-	int xs;
 	const int dpitch = a_Target->GetPitch();
 	if ((x2 > x1) && (y2 > y1))
 	{
@@ -394,13 +397,11 @@ void Sprite::Draw( Surface* a_Target, int a_X, int a_Y )
 		for ( int y = 0; y < height; y++ )
 		{
 			const int line = y + (y1 - a_Y);
-			const int lsx = static_cast<int>(m_Start[m_CurrentFrame][line]) + a_X;
 			if (m_Flags & FLARE)
 			{
-				xs = (lsx > x1)?lsx - x1:0;
-				for ( int x = xs; x < width; x++ )
+				for ( int x = 0; x < width; x++ )
 				{
-					const Pixel c1 = *(src + x);
+					const Pixel c1 = *(src + (x + srcX) + (y + srcY) * m_Pitch);
 					if (c1 & 0xffffff) 
 					{
 						const Pixel c2 = *(dest + addr + x);
@@ -410,15 +411,13 @@ void Sprite::Draw( Surface* a_Target, int a_X, int a_Y )
 			}
 			else 
 			{
-				xs = (lsx > x1)?lsx - x1:0;
-				for ( int x = xs; x < width; x++ )
+				for ( int x = 0; x < width; x++ )
 				{
-					const Pixel c1 = *(src + x);
+					const Pixel c1 = *(src + (x + srcX) + (y + srcY) * m_Pitch);
 					if (c1 & 0xffffff) *(dest + addr + x) = c1;
 				}
 			}
 			addr += dpitch;
-			src += m_Pitch;
 		}
 	}
 }

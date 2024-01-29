@@ -1,0 +1,1 @@
+- Timer now counts in seconds instead of miliseconds

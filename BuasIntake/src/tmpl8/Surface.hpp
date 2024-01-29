@@ -96,7 +96,7 @@ public:
 	};
 	
 	// Structors
-	Sprite( Surface* a_Surface, unsigned int a_NumFrames );
+	Sprite( Surface* a_Surface, unsigned int a_NumFrames, unsigned int a_NumRows );
 	~Sprite();
 	// Methods
 	void Draw( Surface* a_Target, int a_X, int a_Y );
@@ -114,7 +114,8 @@ private:
 	void InitializeStartData();
 	// Attributes
 	int m_Width, m_Height, m_Pitch;
-	unsigned int m_NumFrames;          
+	unsigned int m_NumFrames;
+	unsigned int m_NumRows;
 	unsigned int m_CurrentFrame;       
 	unsigned int m_Flags;
 	unsigned int** m_Start;

@@ -1,12 +1,11 @@
 #pragma once
 
-namespace Tmpl8 {
+#include "tmpl8/Surface.hpp"
 
-class Surface;
 class Game
 {
 public:
-	void SetTarget( Surface* surface ) { screen = surface; }
+	void SetTarget(Tmpl8::Surface* surface) { screen = surface; }
 	void Init();
 	void Shutdown();
 	void Tick( float deltaTime );
@@ -15,8 +14,7 @@ public:
 	void MouseMove( int x, int y ) { /* implement if you want to detect mouse movement */ }
 	void KeyUp( int key ) { /* implement if you want to handle keys */ }
 	void KeyDown( int key ) { /* implement if you want to handle keys */ }
-private:
-	Surface* screen;
-};
 
-}; // namespace Tmpl8
+private:
+	Tmpl8::Surface* screen;
+};

@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\tmpl8\surface.cpp" />
-    <ClCompile Include="src\tmpl8\template.cpp" />
-    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\tmpl8\Template.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\tmpl8\Surface.cpp" />
+    <ClCompile Include="src\tmpl8\SpriteAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\tmpl8\surface.h" />
-    <ClInclude Include="src\tmpl8\template.h" />
-    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\tmpl8\Template.hpp" />
+    <ClInclude Include="src\Game.hpp" />
+    <ClInclude Include="src\tmpl8\Surface.hpp" />
+    <ClInclude Include="src\tmpl8\SpriteAnimation.hpp" />
   </ItemGroup>
 </Project>
