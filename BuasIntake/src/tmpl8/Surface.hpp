@@ -4,7 +4,7 @@
 #pragma once
 #include "Template.hpp"
 
-namespace Tmpl8 {
+namespace tmpl8 {
 
 constexpr int RedMask = 0xff0000;
 constexpr int GreenMask = 0x00ff00;
@@ -79,4 +79,4 @@ private:
 	int s_Transl[256]{};		
 };
 
-}; // namespace Tmpl8
+}; // namespace tmpl8

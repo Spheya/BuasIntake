@@ -3,7 +3,7 @@
 #include "Surface.hpp"
 #include "Template.hpp"
 
-namespace Tmpl8 {
+namespace tmpl8 {
 	class Sprite {
 	public:
 		// Structors

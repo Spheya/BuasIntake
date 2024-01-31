@@ -34,7 +34,7 @@ typedef __int64 int64;
 typedef unsigned __int64 uint64;
 typedef unsigned int uint;
 
-namespace Tmpl8 {
+namespace tmpl8 {
 
 template <typename T>
 constexpr T Min(T a, T b) { return (a > b) ? b : a; }
@@ -265,4 +265,4 @@ inline bool BadFloat(float x)
 	return ((*reinterpret_cast<uint*>(&x) & 0x7f000000) == 0x7f000000);
 }
 	
-}; // namespace Tmpl8
+}; // namespace tmpl8

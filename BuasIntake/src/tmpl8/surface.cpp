@@ -7,7 +7,7 @@
 #include <cstring>
 #include "FreeImage.h"
 
-namespace Tmpl8 {
+namespace tmpl8 {
 
 void NotifyUser( char* s );
 char Surface::s_Font[51][5][6];	
@@ -359,4 +359,4 @@ void Surface::ScaleColor( unsigned int a_Scale )
 	}
 }
 
-}; // namespace Tmpl8
+}; // namespace tmpl8

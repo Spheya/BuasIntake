@@ -5,7 +5,7 @@
 class Game
 {
 public:
-	void SetTarget(Tmpl8::Surface* surface) { screen = surface; }
+	void SetTarget(tmpl8::Surface* surface) { screen = surface; }
 	void Init();
 	void Shutdown();
 	void Tick( float deltaTime );
@@ -16,5 +16,5 @@ public:
 	void KeyDown( int key ) { /* implement if you want to handle keys */ }
 
 private:
-	Tmpl8::Surface* screen;
+	tmpl8::Surface* screen;
 };

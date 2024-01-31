@@ -10,8 +10,8 @@
 // -----------------------------------------------------------
 void Game::Init()
 {
-	auto* surface = new Tmpl8::Surface("assets/Player.png");
-	Tmpl8::Sprite rotatingGun(surface, 16, 4);
+	auto* surface = new tmpl8::Surface("assets/Player.png");
+	tmpl8::Sprite rotatingGun(surface, 16, 4);
 
 	// rendering on surface
 }
@@ -23,8 +23,8 @@ void Game::Shutdown()
 {
 }
 
-static Tmpl8::Sprite rotatingGun(new Tmpl8::Surface("assets/Player.png"), 16, 4);
-static Tmpl8::SpriteAnimation animation{ 4, 5, 6, 7, 8, 9 };
+static tmpl8::Sprite rotatingGun(new tmpl8::Surface("assets/Player.png"), 16, 4);
+static tmpl8::SpriteAnimation animation{ 4, 5, 6, 7, 8, 9 };
 
 // -----------------------------------------------------------
 // Main application tick function
@@ -40,5 +40,5 @@ void Game::Tick(float deltaTime)
 	// draw a sprite
 	animation.update(deltaTime);
 	rotatingGun.SetFrame(animation.getCurrentFrame());
-	rotatingGun.Draw(screen, Tmpl8::vec2(64.0f, 64.0f), Tmpl8::vec2(192.0f, 192.0f));
+	rotatingGun.Draw(screen, tmpl8::vec2(64.0f, 64.0f), tmpl8::vec2(192.0f, 192.0f));
 }

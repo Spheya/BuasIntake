@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace Tmpl8 {
+namespace tmpl8 {
 
 	SpriteAnimation::SpriteAnimation(std::initializer_list<unsigned int> frames) :
 		m_frames(std::move(frames)),

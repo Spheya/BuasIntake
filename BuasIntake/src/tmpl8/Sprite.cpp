@@ -1,6 +1,6 @@
 #include "Sprite.hpp"
 
-namespace Tmpl8 {
+namespace tmpl8 {
 
 	Sprite::Sprite(Surface* a_Surface, unsigned int a_NumFrames, unsigned int a_NumRows) :
 		m_Width(static_cast<int>(a_Surface->GetWidth() / (a_NumFrames / a_NumRows))),

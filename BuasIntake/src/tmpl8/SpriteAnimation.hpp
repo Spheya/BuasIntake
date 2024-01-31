@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <vector>
 
-namespace Tmpl8 {
+namespace tmpl8 {
 
 	class SpriteAnimation {
 	public:
