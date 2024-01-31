@@ -5,11 +5,13 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\tmpl8\Surface.cpp" />
     <ClCompile Include="src\tmpl8\SpriteAnimation.cpp" />
+    <ClCompile Include="src\tmpl8\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tmpl8\Template.hpp" />
     <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\tmpl8\Surface.hpp" />
     <ClInclude Include="src\tmpl8\SpriteAnimation.hpp" />
+    <ClInclude Include="src\tmpl8\Sprite.hpp" />
   </ItemGroup>
 </Project>

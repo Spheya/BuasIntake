@@ -223,12 +223,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\tmpl8\Sprite.cpp" />
     <ClCompile Include="src\tmpl8\SpriteAnimation.cpp" />
     <ClCompile Include="src\tmpl8\Surface.cpp" />
     <ClCompile Include="src\tmpl8\Template.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.hpp" />
+    <ClInclude Include="src\tmpl8\Sprite.hpp" />
     <ClInclude Include="src\tmpl8\SpriteAnimation.hpp" />
     <ClInclude Include="src\tmpl8\Surface.hpp" />
     <ClInclude Include="src\tmpl8\Template.hpp" />

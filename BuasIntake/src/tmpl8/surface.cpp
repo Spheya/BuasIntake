@@ -96,7 +96,7 @@ void Surface::Centre( char* a_String, int y1, Pixel color )
 	Print( a_String, x, y1, color );
 }
 
-void Surface::Print( char* a_String, int x1, int y1, Pixel color )
+void Surface::Print( const char* a_String, int x1, int y1, Pixel color )
 {
 	if (!fontInitialized) 
 	{
@@ -111,8 +111,11 @@ void Surface::Print( char* a_String, int x1, int y1, Pixel color )
 													 else pos = s_Transl[(unsigned short)a_String[i]];
 		Pixel* a = t;
 		char* c = (char*)s_Font[pos];
-		for ( int v = 0; v < 5; v++, c++, a += m_Pitch ) 
-			for ( int h = 0; h < 5; h++ ) if (*c++ == 'o') *(a + h) = color, *(a + h + m_Pitch) = 0;
+		for (int v = 0; v < 5; v++, c++, a += m_Pitch) {
+			for (int h = 0; h < 5; h++) {
+				if (*c++ == 'o') *(a + h) = color, * (a + h + m_Pitch) = 0;
+			}
+		}
 	}
 }
 
@@ -184,9 +187,21 @@ void Surface::Line( float x1, float y1, float x2, float y2, Pixel c )
 	}
 }
 
-void Surface::Plot( int x, int y, Pixel c )
+void Surface::WritePixel( int x, int y, Pixel c )
 { 
 	if ((x >= 0) && (y >= 0) && (x < m_Width) && (y < m_Height)) m_Buffer[x + y * m_Pitch] = c;
+}
+
+Pixel Surface::UvLookup(vec2 uv) {
+	int x = int(uv.x * m_Width);
+	int y = int(uv.y * m_Height);
+	
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+	if (x > m_Width - 1) x = m_Width - 1;
+	if (y > m_Height - 1) y = m_Height - 1;
+
+	return m_Buffer[x + y * m_Pitch];
 }
 
 void Surface::Box( int x1, int y1, int x2, int y2, Pixel c )
@@ -341,219 +356,6 @@ void Surface::ScaleColor( unsigned int a_Scale )
 		unsigned int rb = (((c & (RedMask|BlueMask)) * a_Scale) >> 5) & (RedMask|BlueMask);
 		unsigned int g = (((c & GreenMask) * a_Scale) >> 5) & GreenMask;
 		m_Buffer[i] = rb + g;
-	}
-}
-
-Sprite::Sprite( Surface* a_Surface, unsigned int a_NumFrames, unsigned int a_NumRows ) :
-	m_Width( static_cast<int>(a_Surface->GetWidth() / (a_NumFrames / a_NumRows)) ),
-	m_Height(static_cast<int>(a_Surface->GetHeight() / a_NumRows)),
-	m_Pitch(  a_Surface->GetWidth() ),
-	m_NumFrames( a_NumFrames ),
-	m_NumRows( a_NumRows ),
-	m_CurrentFrame( 0 ),
-	m_Flags( 0 ),
-	m_Start( new unsigned int*[a_NumFrames] ),
-	m_Surface( a_Surface )
-{
-	InitializeStartData();
-}
-
-Sprite::~Sprite()
-{
-	delete m_Surface;
-	for ( unsigned int i = 0; i < m_NumFrames; i++ ) delete m_Start[i];
-	delete[] m_Start;
-}
-
-void Sprite::Draw( Surface* a_Target, int a_X, int a_Y )
-{
-	if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
-	if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
-	int x1 = a_X, x2 = a_X + m_Width;
-	int y1 = a_Y, y2 = a_Y + m_Height;
-	Pixel* src = GetBuffer();
-	int srcX = (m_CurrentFrame % (m_NumFrames / m_NumRows)) * m_Width;
-	int srcY = (m_CurrentFrame / (m_NumFrames / m_NumRows)) * m_Height;
-
-	if (x1 < 0)
-	{
-		srcX += -x1;
-		x1 = 0;
-	}
-	if (x2 > a_Target->GetWidth()) x2 = a_Target->GetWidth();
-	if (y1 < 0) 
-	{ 
-		srcY += -y1;
-		y1 = 0;
-	}
-	if (y2 > a_Target->GetHeight()) y2 = a_Target->GetHeight();
-	Pixel* dest = a_Target->GetBuffer();
-	const int dpitch = a_Target->GetPitch();
-	if ((x2 > x1) && (y2 > y1))
-	{
-		unsigned int addr = y1 * dpitch + x1;
-		const int width = x2 - x1;
-		const int height = y2 - y1;
-		for ( int y = 0; y < height; y++ )
-		{
-			const int line = y + (y1 - a_Y);
-			if (m_Flags & FLARE)
-			{
-				for ( int x = 0; x < width; x++ )
-				{
-					const Pixel c1 = *(src + (x + srcX) + (y + srcY) * m_Pitch);
-					if (c1 & 0xffffff) 
-					{
-						const Pixel c2 = *(dest + addr + x);
-						*(dest + addr + x) = AddBlend( c1, c2 );
-					}
-				}
-			}
-			else 
-			{
-				for ( int x = 0; x < width; x++ )
-				{
-					const Pixel c1 = *(src + (x + srcX) + (y + srcY) * m_Pitch);
-					if (c1 & 0xffffff) *(dest + addr + x) = c1;
-				}
-			}
-			addr += dpitch;
-		}
-	}
-}
-
-void Sprite::DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a_Target )
-{
-	if ((a_Width == 0) || (a_Height == 0)) return;
-	for ( int x = 0; x < a_Width; x++ ) for ( int y = 0; y < a_Height; y++ )
-	{
-		int u = (int)((float)x * ((float)m_Width / (float)a_Width));
-		int v = (int)((float)y * ((float)m_Height / (float)a_Height));
-		Pixel color = GetBuffer()[u + v * m_Pitch];
-		if (color & 0xffffff) a_Target->GetBuffer()[a_X + x + ((a_Y + y) * a_Target->GetPitch())] = color;
-	}
-}
-
-void Sprite::InitializeStartData()
-{
-    for ( unsigned int f = 0; f < m_NumFrames; ++f )
-    {
-        m_Start[f] = new unsigned int[m_Height];
-     	for ( int y = 0; y < m_Height; ++y )
-     	{
-      	    m_Start[f][y] = m_Width;
-			Pixel* addr = GetBuffer() + f * m_Width + y * m_Pitch;
-     	    for ( int x = 0; x < m_Width; ++x )
-     	    {
-                if (addr[x])
-     	        {
-     	            m_Start[f][y] = x;
-                    break;
-                }
-            }
-		}
-	}
-}
-
-Font::Font( char* a_File, char* a_Chars )
-{
-	m_Surface = new Surface( a_File );
-	Pixel* b = m_Surface->GetBuffer();
-	int w = m_Surface->GetWidth();
-	int h = m_Surface->GetHeight();
-	unsigned int charnr = 0, start = 0;
-	m_Trans = new int[256];
-	memset( m_Trans, 0, 1024 );
-	unsigned int i;
-	for ( i = 0; i < strlen( a_Chars ); i++ ) m_Trans[(unsigned char)a_Chars[i]] = i;
-	m_Offset = new int[strlen( a_Chars )];
-	m_Width = new int[strlen( a_Chars )];
-	m_Height = h;
-	m_CY1 = 0, m_CY2 = 1024;
-	int x, y;
-	bool lastempty = true;
-	for ( x = 0; x < w; x++ )
-	{
-		bool empty = true;
-		for ( y = 0; y < h; y++ ) if (*(b + x + y * w) & 0xffffff) 
-		{
-			if (lastempty) start = x;
-			empty = false;
-		}
-		if ((empty) && (!lastempty))
-		{
-			m_Width[charnr] = x - start;
-			m_Offset[charnr] = start;
-			if (++charnr == strlen( a_Chars )) break;
-		}
-		lastempty = empty;
-	}
-}
-
-Font::~Font()
-{
-	delete m_Surface;
-	delete m_Trans;
-	delete m_Width;
-	delete m_Offset;
-}
-
-int Font::Width( char* a_Text )
-{
-	int w = 0;
-	unsigned int i;
-	for ( i = 0; i < strlen( a_Text ); i++ )
-	{
-		unsigned char c = (unsigned char)a_Text[i];
-		if (c == 32) w += 4; else w += m_Width[m_Trans[c]] + 2;
-	}
-	return w;
-}
-
-void Font::Centre( Surface* a_Target, char* a_Text, int a_Y )
-{
-	int x = (a_Target->GetPitch() - Width( a_Text )) / 2;
-	Print( a_Target, a_Text, x, a_Y );
-}
- 
-void Font::Print( Surface* a_Target, char* a_Text, int a_X, int a_Y, bool clip )
-{
-	Pixel* b = a_Target->GetBuffer() + a_X + a_Y * a_Target->GetPitch();
-	Pixel* s = m_Surface->GetBuffer();
-	unsigned int i, cx;
-	int x, y;
-	if (((a_Y + m_Height) < m_CY1) || (a_Y > m_CY2)) return;
-	for ( cx = 0, i = 0; i < strlen( a_Text ); i++ )
-	{
-		if (a_Text[i] == ' ') cx += 4; else
-		{
-			int c = m_Trans[(unsigned char)a_Text[i]];
-			Pixel* t = s + m_Offset[c], *d = b + cx;
-			if (clip)
-			{
-				for ( y = 0; y < m_Height; y++ )
-				{
-					if (((a_Y + y) >= m_CY1) && ((a_Y + y) <= m_CY2))
-					{
-						for ( x = 0; x < m_Width[c]; x++ ) 
-							if ((t[x]) && ((x + (int)cx + a_X) < a_Target->GetPitch())) 
-								d[x] = AddBlend( t[x], d[x] );
-					}
-					t += m_Surface->GetPitch(), d += a_Target->GetPitch();
-				}
-			}
-			else
-			{
-				for ( y = 0; y < m_Height; y++ )
-				{
-					if (((a_Y + y) >= m_CY1) && ((a_Y + y) <= m_CY2))
-						for ( x = 0; x < m_Width[c]; x++ ) if (t[x]) d[x] = AddBlend( t[x], d[x] );
-					t += m_Surface->GetPitch(), d += a_Target->GetPitch();
-				}
-			}
-			cx += m_Width[c] + 2;
-			if ((int)(cx + a_X) >= a_Target->GetPitch()) break;
-		}
 	}
 }
 
