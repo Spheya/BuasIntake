@@ -106,6 +106,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StructMemberAlignment>Default</StructMemberAlignment>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib</AdditionalDependencies>
@@ -135,6 +136,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StructMemberAlignment>Default</StructMemberAlignment>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib</AdditionalDependencies>
@@ -167,6 +169,7 @@
       </BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib</AdditionalDependencies>
@@ -204,6 +207,7 @@
       </BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib</AdditionalDependencies>
@@ -223,17 +227,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\scene\player\Player.cpp" />
+    <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\tmpl8\Sprite.cpp" />
-    <ClCompile Include="src\tmpl8\SpriteAnimation.cpp" />
+    <ClCompile Include="src\graphics\SpriteAnimation.cpp" />
     <ClCompile Include="src\tmpl8\Surface.cpp" />
     <ClCompile Include="src\tmpl8\Template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\scene\Entity.hpp" />
     <ClInclude Include="src\Game.hpp" />
+    <ClInclude Include="src\scene\player\Player.hpp" />
+    <ClInclude Include="src\scene\Scene.hpp" />
     <ClInclude Include="src\tmpl8\Sprite.hpp" />
-    <ClInclude Include="src\tmpl8\SpriteAnimation.hpp" />
+    <ClInclude Include="src\graphics\SpriteAnimation.hpp" />
     <ClInclude Include="src\tmpl8\Surface.hpp" />
     <ClInclude Include="src\tmpl8\Template.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\Player.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

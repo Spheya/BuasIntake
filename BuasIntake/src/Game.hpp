@@ -1,20 +1,24 @@
 #pragma once
 
 #include "tmpl8/Surface.hpp"
+#include "scene/Scene.hpp"
+#include "scene/player/Player.hpp"
 
 class Game
 {
 public:
-	void SetTarget(tmpl8::Surface* surface) { screen = surface; }
+	void SetTarget(tmpl8::Surface* surface) { m_screen = surface; }
 	void Init();
 	void Shutdown();
-	void Tick( float deltaTime );
-	void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseDown( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseMove( int x, int y ) { /* implement if you want to detect mouse movement */ }
-	void KeyUp( int key ) { /* implement if you want to handle keys */ }
-	void KeyDown( int key ) { /* implement if you want to handle keys */ }
+	void Tick(float deltaTime);
+	void MouseUp(int button);
+	void MouseDown(int button);
+	void MouseMove(int x, int y);
+	void KeyUp(int key);
+	void KeyDown(int key);
 
 private:
-	tmpl8::Surface* screen;
+	Scene m_gameScene;
+	tmpl8::Surface* m_screen;
+	std::shared_ptr<Player> m_player;
 };
