@@ -1,10 +1,10 @@
 #include "Game.hpp"
 #include "tmpl8/Template.hpp"
 #include "tmpl8/Sprite.hpp"
-#include "graphics/SpriteAnimation.hpp"
+#include "SpriteAnimation.hpp"
 #include <iostream>
 #include <string>
-#include "scene/player/Player.hpp"
+#include "Player.hpp"
 #include "SDL_keycode.h"
 
 namespace {

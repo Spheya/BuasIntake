@@ -17,6 +17,11 @@ Player::Player(std::shared_ptr<tmpl8::Surface> texture) :
 void Player::update(float deltatime) {
 	updateMovement(deltatime);
 	updateAnimations(deltatime);
+
+	m_duckStart = false;
+
+	m_squishT += deltatime;
+	m_slideCooldownT -= deltatime;
 }
 
 void Player::updateMovement(float deltatime) {
@@ -29,6 +34,11 @@ void Player::updateMovement(float deltatime) {
 	if (!m_onGround) {
 		friction = m_jumpFriction;
 	} else if (m_duckInput) {
+		if (m_duckStart && m_slideCooldownT < 0.0f && std::abs(m_velocity.x) > m_slideMinSpeed) {
+			m_slideCooldownT = m_slideCooldown;
+			m_velocity.x *= m_slideSpeedMultiplier;
+		}
+
 		horizontalInput = 0.0f;
 		friction = m_slideFriction;
 	}
@@ -49,9 +59,15 @@ void Player::updateMovement(float deltatime) {
 
 	// Jumping
 	if (m_jumpInput && m_onGround) {
-		std::cout << "jump" << std::endl;
 		m_onGround = false;
-		m_velocity.y = (m_duckInput ? m_duckJumpIncrease : 1.0f) * - 2.0f * m_jumpHeight / (m_jumpDuration * 0.5f);
+		m_velocity.y = - 2.0f * m_jumpHeight / (m_jumpDuration * 0.5f);
+
+		if (m_slideCooldownT > 0.0f) {
+			m_velocity.x *= m_slideSpeedMultiplier;
+		} else if (m_duckInput) {
+			m_velocity.y *= m_duckJumpIncrease;
+		}
+
 		prevVelocity.y = m_velocity.y; // hacky way to not use verlet intergration over the initial jump force
 	}
 
@@ -107,7 +123,6 @@ void Player::updateAnimations(float deltatime) {
 	if (m_squishT > 0.25f) horizontalSquish = 1.0f;
 	tmpl8::vec2 targetSquish = tmpl8::vec2(horizontalSquish / verticalSquish, verticalSquish / horizontalSquish);
 	m_squish = targetSquish;
-	m_squishT += deltatime;
 
 	// Make player face the right direction
 	if (moveInput)
@@ -127,6 +142,7 @@ void Player::updateInputKeys(int key, bool down) {
 		m_moveLeftInput = down;
 
 	if (key == SDL_SCANCODE_DOWN) {
+		m_duckStart = down && !m_duckInput;
 		m_duckInput = down;
 	}
 

@@ -227,20 +227,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\scene\player\Player.cpp" />
-    <ClCompile Include="src\scene\Scene.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\tmpl8\Sprite.cpp" />
-    <ClCompile Include="src\graphics\SpriteAnimation.cpp" />
+    <ClCompile Include="src\SpriteAnimation.cpp" />
     <ClCompile Include="src\tmpl8\Surface.cpp" />
     <ClCompile Include="src\tmpl8\Template.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\scene\Entity.hpp" />
+    <ClInclude Include="src\Entity.hpp" />
     <ClInclude Include="src\Game.hpp" />
-    <ClInclude Include="src\scene\player\Player.hpp" />
-    <ClInclude Include="src\scene\Scene.hpp" />
+    <ClInclude Include="src\Player.hpp" />
+    <ClInclude Include="src\Scene.hpp" />
     <ClInclude Include="src\tmpl8\Sprite.hpp" />
-    <ClInclude Include="src\graphics\SpriteAnimation.hpp" />
+    <ClInclude Include="src\SpriteAnimation.hpp" />
     <ClInclude Include="src\tmpl8\Surface.hpp" />
     <ClInclude Include="src\tmpl8\Template.hpp" />
   </ItemGroup>

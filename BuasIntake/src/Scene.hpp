@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <memory>
-#include "../tmpl8/Surface.hpp"
+#include "tmpl8/Surface.hpp"
 #include "Entity.hpp"
 
 class Scene {

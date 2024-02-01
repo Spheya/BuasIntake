@@ -1,8 +1,8 @@
 #pragma once
 
 #include "tmpl8/Surface.hpp"
-#include "scene/Scene.hpp"
-#include "scene/player/Player.hpp"
+#include "Scene.hpp"
+#include "Player.hpp"
 
 class Game
 {

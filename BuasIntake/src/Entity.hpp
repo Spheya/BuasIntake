@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../tmpl8/Template.hpp"
-#include "../tmpl8/Surface.hpp"
+#include "tmpl8/Template.hpp"
+#include "tmpl8/Surface.hpp"
 
 class Entity {
 public:

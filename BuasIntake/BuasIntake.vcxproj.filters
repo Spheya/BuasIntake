@@ -1,25 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\tmpl8\Template.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\tmpl8\Surface.cpp" />
-    <ClCompile Include="src\graphics\SpriteAnimation.cpp" />
-    <ClCompile Include="src\tmpl8\Sprite.cpp" />
-    <ClCompile Include="src\scene\Scene.cpp" />
-    <ClCompile Include="src\scene\player\Player.cpp" />
+    <ClCompile Include="src\tmpl8\Surface.cpp">
+      <Filter>tmpl8</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tmpl8\Template.cpp">
+      <Filter>tmpl8</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tmpl8\Sprite.cpp">
+      <Filter>tmpl8</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteAnimation.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\tmpl8\Template.hpp" />
-    <ClInclude Include="src\Game.hpp" />
-    <ClInclude Include="src\tmpl8\Surface.hpp" />
-    <ClInclude Include="src\graphics\SpriteAnimation.hpp" />
-    <ClInclude Include="src\tmpl8\Sprite.hpp" />
-    <ClInclude Include="src\scene\Entity.hpp" />
-    <ClInclude Include="src\scene\Scene.hpp" />
-    <ClInclude Include="src\scene\player\Player.hpp" />
+    <ClInclude Include="src\tmpl8\Surface.hpp">
+      <Filter>tmpl8</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tmpl8\Template.hpp">
+      <Filter>tmpl8</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tmpl8\Sprite.hpp">
+      <Filter>tmpl8</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteAnimation.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\Player.png" />
+    <Filter Include="tmpl8">
+      <UniqueIdentifier>{581d0480-5f37-47b2-a168-8124faaa34a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{9a742dff-17a2-456a-af85-692a107ee3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{a4ea3f01-6acf-4d25-acc5-01a27ff9c9df}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\Player.png">
+      <Filter>assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>
