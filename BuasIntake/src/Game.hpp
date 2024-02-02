@@ -17,8 +17,6 @@ public:
 	void KeyUp(int key);
 	void KeyDown(int key);
 
-	void playerDebugBoxCast(tmpl8::vec2 target);
-
 private:
 	Scene m_gameScene;
 	tmpl8::Surface* m_screen;

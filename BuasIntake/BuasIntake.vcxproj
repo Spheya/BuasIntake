@@ -237,6 +237,7 @@
     <ClCompile Include="src\tmpl8\Template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\RaycastResult.hpp" />
     <ClInclude Include="src\BoundingBox.hpp" />
     <ClInclude Include="src\Entity.hpp" />
     <ClInclude Include="src\Game.hpp" />

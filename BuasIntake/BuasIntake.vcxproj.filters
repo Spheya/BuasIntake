@@ -60,6 +60,9 @@
     <ClInclude Include="src\BoundingBox.hpp">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\RaycastResult.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tmpl8">

@@ -188,7 +188,7 @@ void Surface::Line( float x1, float y1, float x2, float y2, Pixel c )
 }
 
 void Surface::WritePixel( int x, int y, Pixel c )
-{ 
+{
 	if ((x >= 0) && (y >= 0) && (x < m_Width) && (y < m_Height)) m_Buffer[x + y * m_Pitch] = c;
 }
 
@@ -206,10 +206,20 @@ Pixel Surface::UvLookup(vec2 uv) {
 
 void Surface::Box( int x1, int y1, int x2, int y2, Pixel c )
 {
-	Line( (float)x1, (float)y1, (float)x2, (float)y1, c );
-	Line( (float)x2, (float)y1, (float)x2, (float)y2, c );
-	Line( (float)x1, (float)y2, (float)x2, (float)y2, c );
-	Line( (float)x1, (float)y1, (float)x1, (float)y2, c );
+	for (int x = x1; x < x2; x++) {
+		WritePixel(x, y1, c);
+		WritePixel(x, y2, c);
+	}
+
+	for (int y = y1; y < y2; y++) {
+		WritePixel(x1, y, c);
+		WritePixel(x2, y, c);
+	}
+
+	//Line( (float)x1, (float)y1, (float)x2, (float)y1, c );
+	//Line( (float)x2, (float)y1, (float)x2, (float)y2, c );
+	//Line( (float)x1, (float)y2, (float)x2, (float)y2, c );
+	//Line( (float)x1, (float)y1, (float)x1, (float)y2, c );
 }
 
 void Surface::Bar( int x1, int y1, int x2, int y2, Pixel c )

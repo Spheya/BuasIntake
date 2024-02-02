@@ -6,15 +6,23 @@
 #include "Entity.hpp"
 #include "Terrain.hpp"
 #include "BoundingBox.hpp"
+#include "RaycastResult.hpp"
 
 class Scene {
 public:
+	Scene() = default;
+	Scene(Scene&) = delete;
+	Scene& operator=(Scene&) = delete;
+	Scene(Scene&& other) noexcept;
+	Scene& operator=(Scene&& other) noexcept;
+	~Scene();
+
 	void addEntity(std::shared_ptr<Entity> entity);
-	void removeEntity(const Entity* entity);
+	void removeEntity(Entity* entity);
 	bool containsEntity(const Entity* entity);
 
-	float castRay(tmpl8::vec2 origin, tmpl8::vec2 direction, float maxDist = -1.0f);
-	float castBox(BoundingBox origin, tmpl8::vec2 direction, float maxDist = -1.0f);
+	RaycastResult castRay(tmpl8::Surface* surface, tmpl8::vec2 origin, tmpl8::vec2 direction, float maxDist = -1.0f);
+	RaycastResult castBox(tmpl8::Surface* surface, BoundingBox origin, tmpl8::vec2 direction, float maxDist = -1.0f);
 
 	void setTerrain(std::shared_ptr<Terrain> terrain);
 	const std::shared_ptr<Terrain>& getTerrain() const;
@@ -25,4 +33,5 @@ public:
 private:
 	std::shared_ptr<Terrain> m_terrain = nullptr;
 	std::vector<std::shared_ptr<Entity>> m_entities;
+	bool m_valid = true;
 };

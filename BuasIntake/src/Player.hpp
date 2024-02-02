@@ -22,8 +22,9 @@ private:
 	tmpl8::Sprite m_sprite;
 	BoundingBox m_boundingbox;
 
-	SpriteAnimation m_idleAnimation{ 2, 2, 2, 0, 0, 0 };
-	SpriteAnimation m_duckAnimation{ 1 };
+	SpriteAnimation m_idleAnimation{ 1, 1, 1, 0, 0, 0 };
+	SpriteAnimation m_duckAnimation{ 2 };
+	SpriteAnimation m_slideAnimation{ 3 };
 	SpriteAnimation m_runAnimation{ 4, 5, 6, 7, 8, 9 };
 	SpriteAnimation m_jumpAnimation{ 12 };
 	SpriteAnimation m_fallAnimation{ 13 };

@@ -23,16 +23,16 @@ Terrain::~Terrain() {
 
 void Terrain::setTileSolid(size_t x, size_t y, bool solid) {
 	assert(x >= 0 && x < m_width);
-	assert(y >= 0 && y < m_width);
+	assert(y >= 0 && y < m_height);
 
-	m_solidTiles[x * m_width + y] = solid;
+	m_solidTiles[x * m_height + y] = solid;
 }
 
 bool Terrain::isTileSolid(size_t x, size_t y) {
 	if (x < 0 || x >= m_width || y < 0 || y >= m_width)
 		return false;
 
-	return m_solidTiles[x * m_width + y];
+	return m_solidTiles[x * m_height + y];
 }
 
 void Terrain::drawDebugBoxes(tmpl8::Surface* surface) {
@@ -49,8 +49,10 @@ void Terrain::drawDebugBoxes(tmpl8::Surface* surface) {
 	}
 }
 
-float Terrain::castRay(tmpl8::Surface* screen, tmpl8::vec2 origin, tmpl8::vec2 direction, float maxDist) {
+RaycastResult Terrain::castRay(tmpl8::Surface* surface, tmpl8::vec2 origin, tmpl8::vec2 direction, float maxDist) {
 	// Algorithm based on https://www.shadertoy.com/view/4dX3zl
+
+	tmpl8::vec2 original = origin;
 
 	origin = (origin - position) * (1.0f / m_tileSize); // convert to tilespace
 	float endDist = 0.0f;
@@ -63,25 +65,35 @@ float Terrain::castRay(tmpl8::Surface* screen, tmpl8::vec2 origin, tmpl8::vec2 d
 		+ tmpl8::vec2(direction.x < 0.0 ? 0.0f : 1.0f, direction.y < 0.0f ? 0.0f : 1.0f)
 	) * deltaDist;
 
+	tmpl8::vec2 normal(0.0f);
+
+	RaycastResult result(false, maxDist, normal);
+
 	for (int i = 0; i < 32; i++) {
-		if (maxDist > 0.0f && endDist * m_tileSize >= maxDist) return maxDist;
-		if (isTileSolid(mapPos.x, mapPos.y)) return endDist * m_tileSize - 0.001f;
+		if (maxDist > 0.0f && endDist * m_tileSize >= maxDist) break;
+		if (isTileSolid(mapPos.x, mapPos.y)) {
+			result = RaycastResult(true, endDist * m_tileSize - 0.001f, normal);
+			break;
+		}
 
 		if (sideDist.x < sideDist.y) {
 			endDist = sideDist.x;
 			sideDist.x += deltaDist.x;
 			mapPos.x += rayStep.x;
+			normal = tmpl8::vec2(-float(rayStep.x), 0.0f);
 		} else {
 			endDist = sideDist.y;
 			sideDist.y += deltaDist.y;
 			mapPos.y += rayStep.y;
+			normal = tmpl8::vec2(0.0f, -float(rayStep.y));
 		}
 
 		tmpl8::vec2 testPoint = origin * m_tileSize + position + direction * endDist * m_tileSize;
-		screen->Box(testPoint.x - 2, testPoint.y - 2, testPoint.x + 2, testPoint.y + 2, 0xffffffff);
 	}
 
-	return maxDist;
+	tmpl8::vec2 endPoint = original + direction * result.distance;
+
+	return result;
 }
 
 void Terrain::draw(tmpl8::Surface* surface) {

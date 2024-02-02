@@ -1,8 +1,9 @@
 #include "Player.hpp"
 
 #include <cmath>
-#include <iostream>
 #include <SDL_keycode.h>
+
+#include "Scene.hpp"
 
 Player::Player(std::shared_ptr<tmpl8::Surface> texture) :
 	Entity(),
@@ -30,7 +31,6 @@ void Player::update(float deltatime) {
 }
 
 void Player::updateMovement(float deltatime) {
-	m_onGround = position.y >= 400.0f;
 	tmpl8::vec2 prevVelocity = m_velocity;
 	float horizontalInput = float(int(m_moveRightInput) - int(m_moveLeftInput));
 
@@ -53,14 +53,14 @@ void Player::updateMovement(float deltatime) {
 	m_velocity.x = m_velocity.x * t + horizontalInput * m_speed * (1.0f - t);
 
 	// Gravity
-	float gravity = deltatime * (2.0f * m_jumpHeight) / (0.25 * m_jumpDuration * m_jumpDuration);
+	float gravity = (2.0f * m_jumpHeight) / (0.25 * m_jumpDuration * m_jumpDuration);
 	if (m_velocity.y > 0.0f) {
 		gravity *= m_fallGravityIncrease;
 	} else if(!m_jumpInput) {
 		gravity *= m_keyReleaseGravityIncrease;
 	}
 
-	m_velocity.y += gravity;
+	m_velocity.y += gravity * deltatime;
 
 	// Jumping
 	if (m_jumpInput && m_onGround) {
@@ -78,14 +78,31 @@ void Player::updateMovement(float deltatime) {
 	}
 
 	// Verlet intergration to update the position
-	position += (m_velocity + prevVelocity) * deltatime * 0.5f;
+	tmpl8::vec2 movement = (m_velocity + prevVelocity) * deltatime * 0.5f;
 
-	// Collision Detection
-	if (position.y > 400.0f) {
-		position.y = 400.0f;
-		m_onGround = true;
-		m_velocity.y = 0.0f;
+	// Collision detection/handling
+	auto boxCast = scene->castBox(nullptr, m_boundingbox, movement.normalized(), movement.length());
+	if (boxCast.hit) {
+		tmpl8::vec2 toWall = movement.normalized() * boxCast.distance;
+		tmpl8::vec2 tangent = tmpl8::vec2(boxCast.normal.y, -boxCast.normal.x);
+		movement = tangent * tangent.dot(movement);
+		m_velocity = tangent * tangent.dot(m_velocity);
+
+		m_boundingbox.center += toWall;
+		auto secondBoxCast = scene->castBox(nullptr, m_boundingbox, movement.normalized(), movement.length());
+		if (secondBoxCast.hit) {
+			if (secondBoxCast.normal.y < 0.0f)
+				m_onGround = true;
+
+			movement = toWall;
+		} else {
+			if (boxCast.normal.y < 0.0f)
+				m_onGround = true;
+
+			movement += toWall;
+		}
 	}
+	position += movement;
 }
 
 void Player::updateAnimations(float deltatime) {
@@ -138,7 +155,6 @@ void Player::updateAnimations(float deltatime) {
 
 void Player::draw(tmpl8::Surface* surface) {
 	m_sprite.Draw(surface, position, size * m_squish);
-	m_boundingbox.drawDebug(surface, 0xff00ff00);
 }
 
 BoundingBox Player::getBoundingBox() const {

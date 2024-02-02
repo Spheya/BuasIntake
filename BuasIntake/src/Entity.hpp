@@ -3,6 +3,8 @@
 #include "tmpl8/Template.hpp"
 #include "tmpl8/Surface.hpp"
 
+class Scene;
+
 class Entity {
 public:
 	virtual ~Entity() = default;
@@ -16,6 +18,7 @@ public:
 	tmpl8::vec2 position = tmpl8::vec2(0.0f);
 	tmpl8::vec2 size = tmpl8::vec2(16.0f);
 	float depth = 0.0f;
+	Scene* scene = nullptr;
 
 private:
 	bool m_deletionFlag = false;

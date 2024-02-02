@@ -3,6 +3,7 @@
 #include "tmpl8/Template.hpp"
 #include "tmpl8/Surface.hpp"
 #include "Entity.hpp"
+#include "RaycastResult.hpp"
 
 class Terrain : public Entity {
 public:
@@ -13,7 +14,7 @@ public:
 	bool isTileSolid(size_t x, size_t y);
 
 	void drawDebugBoxes(tmpl8::Surface* surface);
-	float castRay(tmpl8::Surface* , tmpl8::vec2 origin, tmpl8::vec2 direction, float maxDist = -1.0f);
+	RaycastResult castRay(tmpl8::Surface* surface, tmpl8::vec2 origin, tmpl8::vec2 direction, float maxDist = -1.0f);
 	
 	void update(float deltatime) override {};
 	void draw(tmpl8::Surface* surface) override;
