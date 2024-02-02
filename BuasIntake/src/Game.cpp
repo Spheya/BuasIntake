@@ -65,7 +65,7 @@ void Game::Tick(float deltaTime) {
 	m_gameScene.draw(m_screen);
 
 	// show fps
-	std::string fpsCounter = (std::to_string(deltaTime) + "fps");
+	std::string fpsCounter = (std::to_string(1.0f / deltaTime) + "fps");
 	m_screen->Print(fpsCounter.c_str(), 32, 32, 0xffffffff);
 }
 

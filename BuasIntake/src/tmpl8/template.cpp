@@ -10,6 +10,8 @@
 #pragma warning (disable : 4311) // pointer truncation from HANDLE to long
 #endif
 
+#pragma warning (push, 0)
+
 //#define FULLSCREEN
 //#define ADVANCEDGL
 
@@ -405,3 +407,5 @@ int main( int argc, char **argv )
 	SDL_Quit();
 	return 0;
 }
+
+#pragma warning (pop)

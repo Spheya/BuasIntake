@@ -8,6 +8,8 @@
 #pragma comment(linker, "/manifestdependency:\"name='dlls_x64' version='1.0.0.0' type='x64'\"")
 #endif
 
+#pragma warning (push, 0)
+
 #include <cstdlib>
 #include <cstdio>
 #include <cmath>
@@ -300,3 +302,6 @@ inline bool BadFloat(float x)
 }
 	
 }; // namespace tmpl8
+
+
+#pragma warning (pop)

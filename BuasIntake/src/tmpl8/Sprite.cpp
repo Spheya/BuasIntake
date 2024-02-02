@@ -19,7 +19,7 @@ namespace tmpl8 {
 		int pos2Y = int(position.y) + int(size.y * (1.0f - m_Origin.y));
 
 		vec2 uvScale = vec2(float(m_NumRows) / float(m_NumFrames), 1.0f / float(m_NumRows));
-		vec2 uvOffset = uvScale * vec2(m_CurrentFrame % (m_NumFrames / m_NumRows), (m_NumRows * m_CurrentFrame) / m_NumFrames);
+		vec2 uvOffset = uvScale * vec2(float(m_CurrentFrame % (m_NumFrames / m_NumRows)), float((m_NumRows * m_CurrentFrame) / m_NumFrames));
 
 		for (int x = std::min(pos1X, pos2X); x < std::max(pos1X, pos2X); x++) {
 			for (int y = std::min(pos1Y, pos2Y); y < std::max(pos1Y, pos2Y); y++) {

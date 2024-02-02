@@ -57,7 +57,7 @@ RaycastResult Terrain::castRay(tmpl8::Surface* surface, tmpl8::vec2 origin, tmpl
 	origin = (origin - position) * (1.0f / m_tileSize); // convert to tilespace
 	float endDist = 0.0f;
 
-	tmpl8::ivec2 mapPos = tmpl8::ivec2(origin.x, origin.y);
+	tmpl8::ivec2 mapPos = tmpl8::ivec2(int(origin.x), int(origin.y));
 	tmpl8::ivec2 rayStep = tmpl8::ivec2(direction.x < 0.0 ? -1 : +1, direction.y < 0.0f ? -1 : +1);
 	tmpl8::vec2 deltaDist = tmpl8::vec2(1.0f / std::abs(direction.x), 1.0f / std::abs(direction.y));
 	tmpl8::vec2 sideDist = (

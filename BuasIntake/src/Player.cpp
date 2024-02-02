@@ -53,7 +53,7 @@ void Player::updateMovement(float deltatime) {
 	m_velocity.x = m_velocity.x * t + horizontalInput * m_speed * (1.0f - t);
 
 	// Gravity
-	float gravity = (2.0f * m_jumpHeight) / (0.25 * m_jumpDuration * m_jumpDuration);
+	float gravity = (2.0f * m_jumpHeight) / (0.25f * m_jumpDuration * m_jumpDuration);
 	if (m_velocity.y > 0.0f) {
 		gravity *= m_fallGravityIncrease;
 	} else if(!m_jumpInput) {
@@ -142,7 +142,7 @@ void Player::updateAnimations(float deltatime) {
 
 	// Squishing
 	float verticalSquish = 1.0f + std::abs(m_velocity.y) * 0.0004f;
-	float horizontalSquish = 1.0f + 0.125 * std::exp(-4.0f * m_squishT) * std::cos(20.0f * m_squishT);
+	float horizontalSquish = 1.0f + 0.125f * std::exp(-4.0f * m_squishT) * std::cos(20.0f * m_squishT);
 	if (m_squishT > 0.25f) horizontalSquish = 1.0f;
 	tmpl8::vec2 targetSquish = tmpl8::vec2(horizontalSquish / verticalSquish, verticalSquish / horizontalSquish);
 	m_squish = targetSquish;
