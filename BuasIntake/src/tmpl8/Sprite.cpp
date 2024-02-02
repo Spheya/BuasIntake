@@ -24,7 +24,10 @@ namespace tmpl8 {
 		for (int x = std::min(pos1X, pos2X); x < std::max(pos1X, pos2X); x++) {
 			for (int y = std::min(pos1Y, pos2Y); y < std::max(pos1Y, pos2Y); y++) {
 				vec2 uv(float(x - pos1X) / float(pos2X - pos1X), float(y - pos1Y) / float(pos2Y - pos1Y));
-				target->WritePixel(x, y, m_Surface->UvLookup(uv * uvScale + uvOffset));
+				Pixel color = m_Surface->UvLookup(uv * uvScale + uvOffset);
+				if (color & 0xff000000) {
+					target->WritePixel(x, y, color);
+				}
 			}
 		}
 	}

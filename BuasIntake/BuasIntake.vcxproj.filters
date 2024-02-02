@@ -22,6 +22,12 @@
     <ClCompile Include="src\SpriteAnimation.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Terrain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BoundingBox.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tmpl8\Surface.hpp">
@@ -46,6 +52,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\SpriteAnimation.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Terrain.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoundingBox.hpp">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

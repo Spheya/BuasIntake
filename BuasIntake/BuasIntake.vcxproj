@@ -226,15 +226,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BoundingBox.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\Terrain.cpp" />
     <ClCompile Include="src\tmpl8\Sprite.cpp" />
     <ClCompile Include="src\SpriteAnimation.cpp" />
     <ClCompile Include="src\tmpl8\Surface.cpp" />
     <ClCompile Include="src\tmpl8\Template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BoundingBox.hpp" />
     <ClInclude Include="src\Entity.hpp" />
     <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\Player.hpp" />
@@ -243,6 +246,7 @@
     <ClInclude Include="src\SpriteAnimation.hpp" />
     <ClInclude Include="src\tmpl8\Surface.hpp" />
     <ClInclude Include="src\tmpl8\Template.hpp" />
+    <ClInclude Include="src\Terrain.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Player.png" />

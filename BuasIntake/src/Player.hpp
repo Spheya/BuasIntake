@@ -5,6 +5,7 @@
 #include "tmpl8/Sprite.hpp"
 #include "SpriteAnimation.hpp"
 #include "Entity.hpp"
+#include "BoundingBox.hpp"
 
 class Player : public Entity {
 public:
@@ -13,12 +14,15 @@ public:
 	void update(float deltatime) override;
 	void draw(tmpl8::Surface* surface) override;
 
+	BoundingBox getBoundingBox() const;
+
 	void updateInputKeys(int key, bool down);
 
 private:
 	tmpl8::Sprite m_sprite;
+	BoundingBox m_boundingbox;
 
-	SpriteAnimation m_idleAnimation{ 0 };
+	SpriteAnimation m_idleAnimation{ 2, 2, 2, 0, 0, 0 };
 	SpriteAnimation m_duckAnimation{ 1 };
 	SpriteAnimation m_runAnimation{ 4, 5, 6, 7, 8, 9 };
 	SpriteAnimation m_jumpAnimation{ 12 };
@@ -48,7 +52,9 @@ private:
 	float m_duckJumpIncrease = 1.3f;
 	float m_fallGravityIncrease = 1.4f;
 	float m_keyReleaseGravityIncrease = 2.25f;
-	float m_slideCooldown = 0.2f;
+	float m_slideCooldown = 0.3f;
+	float m_slideJumpHorizontalSpeedModifier = 2.5f;
+	float m_slideJumpJumpModifier = 0.8f;
 
 	void updateMovement(float deltatime);
 	void updateAnimations(float deltatime);

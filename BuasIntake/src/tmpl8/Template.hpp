@@ -10,6 +10,7 @@
 
 #include <cstdlib>
 #include <cstdio>
+#include <cmath>
 
 constexpr int ScreenWidth = 800;
 constexpr int ScreenHeight = 512;
@@ -35,6 +36,9 @@ typedef unsigned __int64 uint64;
 typedef unsigned int uint;
 
 namespace tmpl8 {
+
+template <typename T>
+constexpr T Sign(T a) { return (a < T(0)) ? T(-1) : ((a == T(0)) ? T(0) : T(1)); }
 
 template <typename T>
 constexpr T Min(T a, T b) { return (a > b) ? b : a; }
@@ -99,7 +103,37 @@ public:
 	void normalize() { float r = 1.0f / length(); x *= r; y *= r; }
 	static vec2 normalize( vec2 v ) { return v.normalized(); }
 	float dot( const vec2& operand ) const { return x * operand.x + y * operand.y; }
+	static vec2 abs(vec2 v) { return vec2(std::abs(v.x), std::abs(v.y)); }
+	static vec2 floor(vec2 v) { return vec2(std::floor(v.x), std::floor(v.y)); }
+	static vec2 sign(vec2 v) { return vec2(tmpl8::Sign(v.x) , tmpl8::Sign(v.y)); }
 };
+
+class ivec2
+{
+public:
+	union { struct { int x, y; }; int cell[2]; };
+	ivec2() {}
+	ivec2(int v) : x(v), y(v) {}
+	ivec2(int x, int y) : x(x), y(y) {}
+	ivec2 operator - () const { return ivec2(-x, -y); }
+	ivec2 operator + (const ivec2& addOperand) const { return ivec2(x + addOperand.x, y + addOperand.y); }
+	ivec2 operator - (const ivec2& operand) const { return ivec2(x - operand.x, y - operand.y); }
+	ivec2 operator * (const ivec2& operand) const { return ivec2(x * operand.x, y * operand.y); }
+	ivec2 operator * (int operand) const { return ivec2(x * operand, y * operand); }
+	void operator -= (const ivec2& a) { x -= a.x; y -= a.y; }
+	void operator += (const ivec2& a) { x += a.x; y += a.y; }
+	void operator *= (const ivec2& a) { x *= a.x; y *= a.y; }
+	void operator *= (int a) { x *= a; y *= a; }
+	int& operator [] (const int idx) { return cell[idx]; }
+	int length() { return sqrtf(x * x + y * y); }
+	int sqrLentgh() { return x * x + y * y; }
+	ivec2 normalized() { int r = 1.0f / length(); return ivec2(x * r, y * r); }
+	void normalize() { int r = 1.0f / length(); x *= r; y *= r; }
+	static ivec2 normalize(ivec2 v) { return v.normalized(); }
+	int dot(const ivec2& operand) const { return x * operand.x + y * operand.y; }
+	static ivec2 abs(ivec2 v) { return ivec2(std::abs(v.x), std::abs(v.y)); }
+};
+
 
 class vec3
 {

@@ -18,6 +18,11 @@ void Player::update(float deltatime) {
 	updateMovement(deltatime);
 	updateAnimations(deltatime);
 
+	// update bounding box
+	m_boundingbox.size = size * tmpl8::vec2(0.25f, 0.4f);
+	m_boundingbox.center = position + tmpl8::vec2(0.0f, m_boundingbox.size.y * -0.5f);
+
+	// update some random variables
 	m_duckStart = false;
 
 	m_squishT += deltatime;
@@ -63,7 +68,8 @@ void Player::updateMovement(float deltatime) {
 		m_velocity.y = - 2.0f * m_jumpHeight / (m_jumpDuration * 0.5f);
 
 		if (m_slideCooldownT > 0.0f) {
-			m_velocity.x *= m_slideSpeedMultiplier;
+			m_velocity.x *= m_slideJumpHorizontalSpeedModifier;
+			m_velocity.y *= m_slideJumpJumpModifier;
 		} else if (m_duckInput) {
 			m_velocity.y *= m_duckJumpIncrease;
 		}
@@ -132,6 +138,11 @@ void Player::updateAnimations(float deltatime) {
 
 void Player::draw(tmpl8::Surface* surface) {
 	m_sprite.Draw(surface, position, size * m_squish);
+	m_boundingbox.drawDebug(surface, 0xff00ff00);
+}
+
+BoundingBox Player::getBoundingBox() const {
+	return m_boundingbox;
 }
 
 void Player::updateInputKeys(int key, bool down) {

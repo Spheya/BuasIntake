@@ -15,6 +15,7 @@ public:
 
 	tmpl8::vec2 position = tmpl8::vec2(0.0f);
 	tmpl8::vec2 size = tmpl8::vec2(16.0f);
+	float depth = 0.0f;
 
 private:
 	bool m_deletionFlag = false;
