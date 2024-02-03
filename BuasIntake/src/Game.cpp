@@ -54,7 +54,7 @@ void Game::Shutdown()
 // -----------------------------------------------------------
 void Game::Tick(float deltaTime) {
 	// clear the graphics window
-	m_screen->Clear(0);
+	m_screen->Clear(0xffadd4d9);
 
 	// Update Game
 	m_gameScene.updateEntities(deltaTime);
@@ -64,8 +64,8 @@ void Game::Tick(float deltaTime) {
 	m_gameScene.draw(m_screen);
 
 	// show fps
-	std::string fpsCounter = (std::to_string(1.0f / deltaTime) + "fps");
-	m_screen->Print(fpsCounter.c_str(), 32, 32, 0xffffffff);
+	//std::string fpsCounter = (std::to_string(1.0f / deltaTime) + "fps");
+	//m_screen->Print(fpsCounter.c_str(), 32, 32, 0xffffffff);
 }
 
 void Game::MouseUp(int button) {

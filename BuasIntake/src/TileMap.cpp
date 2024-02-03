@@ -48,12 +48,26 @@ size_t TileMap::getHeight() const {
 void TileMap::update(float deltatime) {}
 
 void TileMap::draw(tmpl8::Surface* surface) {
-	for (size_t x = 0; x < m_width; x++) {
-		for (size_t y = 0; y < m_height; y++) {
+	tmpl8::vec2 tileSizeSS = Camera::Main.scaleToScreenSpace(tmpl8::vec2(m_tileSize));
+
+	int width = int(std::ceil(ScreenWidth / tileSizeSS.x));
+	int height = int(std::ceil(ScreenHeight / tileSizeSS.y));
+
+	tmpl8::vec2 cameraTilePos = (Camera::Main.position - position) * (1.0f / m_tileSize);
+	
+	size_t minX = std::max(std::min(int(cameraTilePos.x - width / 2) - 1, int(m_width - 1)), 0);
+	size_t maxX = std::max(std::min(int(cameraTilePos.x + width / 2) + 2, int(m_width - 1)), 0);
+	size_t minY = std::max(std::min(int(cameraTilePos.y - height / 2) - 1, int(m_height - 1)), 0);
+	size_t maxY = std::max(std::min(int(cameraTilePos.y + height / 2) + 2, int(m_height - 1)), 0);
+
+	std::cout << minX << " " << maxX << std::endl;
+
+	for (size_t x = minX; x < maxX; x++) {
+		for (size_t y = minY; y < maxY; y++) {
 			int tile = getTile(x, y);
 			if (tile != -1) {
 				m_sprite->SetFrame(tile);
-				m_sprite->Draw(surface, Camera::Main.toScreenSpace(position + tmpl8::vec2(x, y) * m_tileSize), Camera::Main.scaleToScreenSpace(tmpl8::vec2(m_tileSize)));
+				m_sprite->Draw(surface, Camera::Main.toScreenSpace(position + tmpl8::vec2(x, y) * m_tileSize), tileSizeSS);
 			}
 		}
 	}
