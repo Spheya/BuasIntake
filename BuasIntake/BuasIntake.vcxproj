@@ -227,6 +227,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\BoundingBox.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scene.cpp" />
@@ -238,6 +239,7 @@
     <ClCompile Include="src\tmpl8\Template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\RaycastResult.hpp" />
     <ClInclude Include="src\BoundingBox.hpp" />
     <ClInclude Include="src\Entity.hpp" />

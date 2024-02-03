@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "Camera.hpp"
 
 TileMap::TileMap(const char* filename, std::shared_ptr<tmpl8::Sprite> sprite, float tileSize) :
 	m_width(0),
@@ -52,7 +53,7 @@ void TileMap::draw(tmpl8::Surface* surface) {
 			int tile = getTile(x, y);
 			if (tile != -1) {
 				m_sprite->SetFrame(tile);
-				m_sprite->Draw(surface, position + tmpl8::vec2(x, y) * m_tileSize, tmpl8::vec2(m_tileSize));
+				m_sprite->Draw(surface, Camera::Main.toScreenSpace(position + tmpl8::vec2(x, y) * m_tileSize), Camera::Main.scaleToScreenSpace(tmpl8::vec2(m_tileSize)));
 			}
 		}
 	}

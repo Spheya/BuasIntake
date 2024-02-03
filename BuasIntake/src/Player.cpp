@@ -4,6 +4,7 @@
 #include <SDL_keycode.h>
 
 #include "Scene.hpp"
+#include "Camera.hpp"
 
 Player::Player(std::shared_ptr<tmpl8::Surface> texture) :
 	Entity(),
@@ -21,7 +22,7 @@ void Player::update(float deltatime) {
 
 	// update bounding box
 	m_boundingbox.size = size * tmpl8::vec2(0.25f, 0.4f);
-	m_boundingbox.center = position + tmpl8::vec2(0.0f, m_boundingbox.size.y * -0.5f);
+	m_boundingbox.center = position + tmpl8::vec2(0.0f, m_boundingbox.size.y * -0.5f) - tmpl8::vec2(0.0f, 1.0f);
 
 	// update some random variables
 	m_duckStart = false;
@@ -33,6 +34,10 @@ void Player::update(float deltatime) {
 void Player::updateMovement(float deltatime) {
 	tmpl8::vec2 prevVelocity = m_velocity;
 	float horizontalInput = float(int(m_moveRightInput) - int(m_moveLeftInput));
+
+	// Check for falling down
+	if (m_velocity.y > 0.0)
+		m_onGround = false;
 
 	// Change movement values when sliding or when in air
 	float friction = m_friction;
@@ -91,7 +96,7 @@ void Player::updateMovement(float deltatime) {
 		m_boundingbox.center += toWall;
 		auto secondBoxCast = scene->castBox(nullptr, m_boundingbox, movement.normalized(), movement.length());
 		if (secondBoxCast.hit) {
-			if (secondBoxCast.normal.y < 0.0f)
+			if (boxCast.normal.y < 0.0f || secondBoxCast.normal.y < 0.0f)
 				m_onGround = true;
 
 			movement = toWall;
@@ -155,7 +160,7 @@ void Player::updateAnimations(float deltatime) {
 
 
 void Player::draw(tmpl8::Surface* surface) {
-	m_sprite.Draw(surface, position, size * m_squish);
+	m_sprite.Draw(surface, Camera::Main.toScreenSpace(position), Camera::Main.scaleToScreenSpace(size * m_squish));
 }
 
 BoundingBox Player::getBoundingBox() const {

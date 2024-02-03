@@ -54,7 +54,7 @@ private:
 	float m_fallGravityIncrease = 1.4f;
 	float m_keyReleaseGravityIncrease = 2.25f;
 	float m_slideCooldown = 0.3f;
-	float m_slideJumpHorizontalSpeedModifier = 2.5f;
+	float m_slideJumpHorizontalSpeedModifier = 3.0f;
 	float m_slideJumpJumpModifier = 0.8f;
 
 	void updateMovement(float deltatime);

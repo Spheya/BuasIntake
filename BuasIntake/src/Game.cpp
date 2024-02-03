@@ -6,6 +6,7 @@
 #include "Player.hpp"
 #include "Terrain.hpp"
 #include "TileMap.hpp"
+#include "Camera.hpp"
 
 namespace {
 	
@@ -34,6 +35,7 @@ void Game::Init()
 	m_player->position = tmpl8::vec2(300.0f, 400.0f);
 	m_player->depth = -1.0f;
 	m_gameScene.addEntity(m_player);
+	Camera::Main.position = m_player->position;
 
 	auto terrain = std::make_shared<Terrain>(map, 48.0f);
 	m_gameScene.addEntity(terrain);
@@ -56,6 +58,7 @@ void Game::Tick(float deltaTime) {
 
 	// Update Game
 	m_gameScene.updateEntities(deltaTime);
+	Camera::Main.moveTowards(deltaTime, m_player->position, tmpl8::vec2(6.0f, 2.5f));
 
 	// Draw Game
 	m_gameScene.draw(m_screen);

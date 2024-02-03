@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cassert>
 #include <iostream>
+#include "Camera.hpp"
 
 Terrain::Terrain(std::shared_ptr<const TileMap> collisionMap, float tileSize) :
 	m_width(collisionMap->getWidth()),
@@ -53,6 +54,10 @@ void Terrain::drawDebugBoxes(tmpl8::Surface* surface) {
 		for (size_t y = 0; y < m_height; y++) {
 			tmpl8::vec2 min = position + tmpl8::vec2(position.x + x * m_tileSize, position.y + y * m_tileSize);
 			tmpl8::vec2 max = min + tmpl8::vec2(m_tileSize, m_tileSize);
+
+			min = Camera::Main.toScreenSpace(min);
+			max = Camera::Main.toScreenSpace(max);
+
 			if (isTileSolid(x, y)) {
 				surface->Box(int(min.x) + 1, int(min.y) + 1, int(max.x) - 1, int(max.y) - 1, 0xffff0000);
 			} else {
@@ -85,7 +90,7 @@ RaycastResult Terrain::castRay(tmpl8::Surface* surface, tmpl8::vec2 origin, tmpl
 	for (int i = 0; i < 32; i++) {
 		if (maxDist > 0.0f && endDist * m_tileSize >= maxDist) break;
 		if (isTileSolid(mapPos.x, mapPos.y)) {
-			result = RaycastResult(true, endDist * m_tileSize - 0.01f, normal);
+			result = RaycastResult(true, endDist * m_tileSize - 0.05f, normal);
 			break;
 		}
 

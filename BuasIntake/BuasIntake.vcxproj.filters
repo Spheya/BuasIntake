@@ -28,7 +28,12 @@
     <ClCompile Include="src\BoundingBox.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\TileMap.cpp" />
+    <ClCompile Include="src\TileMap.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tmpl8\Surface.hpp">
@@ -67,6 +72,9 @@
     <ClInclude Include="src\TileMap.hpp">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Camera.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tmpl8">
@@ -83,9 +91,13 @@
     <Image Include="assets\Player.png">
       <Filter>assets</Filter>
     </Image>
-    <Image Include="assets\TileSet.png" />
+    <Image Include="assets\TileSet.png">
+      <Filter>assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\DebugLevel.csv" />
+    <None Include="assets\DebugLevel.csv">
+      <Filter>assets</Filter>
+    </None>
   </ItemGroup>
 </Project>
