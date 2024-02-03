@@ -60,8 +60,6 @@ void TileMap::draw(tmpl8::Surface* surface) {
 	size_t minY = std::max(std::min(int(cameraTilePos.y - height / 2) - 1, int(m_height - 1)), 0);
 	size_t maxY = std::max(std::min(int(cameraTilePos.y + height / 2) + 2, int(m_height - 1)), 0);
 
-	std::cout << minX << " " << maxX << std::endl;
-
 	for (size_t x = minX; x < maxX; x++) {
 		for (size_t y = minY; y < maxY; y++) {
 			int tile = getTile(x, y);
