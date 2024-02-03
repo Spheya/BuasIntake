@@ -4,9 +4,11 @@
 #include "tmpl8/Surface.hpp"
 #include "Entity.hpp"
 #include "RaycastResult.hpp"
+#include "TileMap.hpp"
 
 class Terrain : public Entity {
 public:
+	Terrain(std::shared_ptr<const TileMap> collisionMap, float tileSize = 32.0f);
 	Terrain(size_t width, size_t height, float tileSize = 32.0f);
 	~Terrain();
 

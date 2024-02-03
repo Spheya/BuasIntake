@@ -28,6 +28,7 @@
     <ClCompile Include="src\BoundingBox.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tmpl8\Surface.hpp">
@@ -63,6 +64,9 @@
     <ClInclude Include="src\RaycastResult.hpp">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\TileMap.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tmpl8">
@@ -79,5 +83,9 @@
     <Image Include="assets\Player.png">
       <Filter>assets</Filter>
     </Image>
+    <Image Include="assets\TileSet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\DebugLevel.csv" />
   </ItemGroup>
 </Project>

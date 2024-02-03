@@ -231,6 +231,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Terrain.cpp" />
+    <ClCompile Include="src\TileMap.cpp" />
     <ClCompile Include="src\tmpl8\Sprite.cpp" />
     <ClCompile Include="src\SpriteAnimation.cpp" />
     <ClCompile Include="src\tmpl8\Surface.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\Scene.hpp" />
+    <ClInclude Include="src\TileMap.hpp" />
     <ClInclude Include="src\tmpl8\Sprite.hpp" />
     <ClInclude Include="src\SpriteAnimation.hpp" />
     <ClInclude Include="src\tmpl8\Surface.hpp" />
@@ -251,6 +253,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Player.png" />
+    <Image Include="assets\TileSet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\DebugLevel.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

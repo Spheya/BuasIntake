@@ -95,6 +95,7 @@ void Player::updateMovement(float deltatime) {
 				m_onGround = true;
 
 			movement = toWall;
+			m_velocity = tmpl8::vec2(0.0f);
 		} else {
 			if (boxCast.normal.y < 0.0f)
 				m_onGround = true;
@@ -162,7 +163,7 @@ BoundingBox Player::getBoundingBox() const {
 }
 
 void Player::updateInputKeys(int key, bool down) {
-	if (key == SDL_SCANCODE_UP || key == SDL_SCANCODE_Z)
+	if (key == SDL_SCANCODE_UP || key == SDL_SCANCODE_Z || key == SDL_SCANCODE_SPACE)
 		m_jumpInput = down;
 
 	if (key == SDL_SCANCODE_LEFT)

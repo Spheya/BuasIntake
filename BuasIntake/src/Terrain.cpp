@@ -4,6 +4,19 @@
 #include <cassert>
 #include <iostream>
 
+Terrain::Terrain(std::shared_ptr<const TileMap> collisionMap, float tileSize) :
+	m_width(collisionMap->getWidth()),
+	m_height(collisionMap->getHeight()),
+	m_tileSize(tileSize),
+	m_solidTiles(new bool[collisionMap->getWidth() * collisionMap->getHeight()])
+{
+	for (size_t x = 0; x < m_width; x++) {
+		for (size_t y = 0; y < m_height; y++) {
+			setTileSolid(x, y, collisionMap->getTile(x, y) != -1);
+		}
+	}
+}
+
 Terrain::Terrain(size_t width, size_t height, float tileSize) :
 	m_width(width),
 	m_height(height),
@@ -72,7 +85,7 @@ RaycastResult Terrain::castRay(tmpl8::Surface* surface, tmpl8::vec2 origin, tmpl
 	for (int i = 0; i < 32; i++) {
 		if (maxDist > 0.0f && endDist * m_tileSize >= maxDist) break;
 		if (isTileSolid(mapPos.x, mapPos.y)) {
-			result = RaycastResult(true, endDist * m_tileSize - 0.001f, normal);
+			result = RaycastResult(true, endDist * m_tileSize - 0.01f, normal);
 			break;
 		}
 
@@ -97,5 +110,5 @@ RaycastResult Terrain::castRay(tmpl8::Surface* surface, tmpl8::vec2 origin, tmpl
 }
 
 void Terrain::draw(tmpl8::Surface* surface) {
-	drawDebugBoxes(surface);
+	//drawDebugBoxes(surface);
 }
