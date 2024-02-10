@@ -8,6 +8,8 @@
 #include "TileMap.hpp"
 #include "Camera.hpp"
 
+#include <tileson.h>
+
 namespace {
 	
 	std::shared_ptr<tmpl8::Surface> PlayerTexture = std::make_shared<tmpl8::Surface>("assets/Player.png");
